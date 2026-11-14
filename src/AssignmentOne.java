@@ -40,9 +40,21 @@ public class AssignmentOne {
         System.out.println(manager.addAppointment(new Appointment("Sam Lee", "0456789012", surgeon1, "15:30")));
         System.out.println(manager.addAppointment(new Appointment("Anna Bell", "0467890123", dietitian1, "11:00")));
 
-        System.out.println("\n--- 6.2 Invalid attempts ---");
-        System.out.println(manager.addAppointment(new Appointment("Tom Hardy", "0478901234", gp1, "09:00")));
-        System.out.println(manager.addAppointment(new Appointment("Tom Hardy", "0478901234", gp1, "09:15")));
+        System.out.println("\n--- 6.2 Invalid attempts (error handling) ---");
+
+        // 1) same professional, same slot -> rejected by manager
+        System.out.println(manager.addAppointment(
+                new Appointment("Tom Hardy", "0478901234", gp1, "09:00")));
+
+        // 2) invalid time slot -> rejected by Appointment constructor
+        try {
+            System.out.println(manager.addAppointment(
+                    new Appointment("Tom Hardy", "0478901234", gp1, "09:15")));
+        } catch (IllegalArgumentException e) {
+            System.out.println("WARNING: " + e.getMessage());
+        }
+
+        // 3) invalid mobile number -> rejected by Appointment constructor
         try {
             new Appointment("Bad Mobile", "abc", gp2, "12:00");
         } catch (IllegalArgumentException e) {
